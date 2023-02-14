@@ -78,27 +78,78 @@
             this.text = text;
             this.date = new Date();
         }
+
         edit(newText) {
             this.text = newText;
             this.date = new Date();
         }
+
         show() {
             console.log('text: ', this.text);
             console.log(`data: ${this.date}`);
         }
 
 
-
         get textAndName() {
             return `имя: ${this.name}. text: ${this.text}`;
         }
     }
+
     const newExemplarOfClassPostES6 = new PostES6('ivan', 'lorem');
     newExemplarOfClassPostES6.show();
     newExemplarOfClassPostES6.edit('gyfd');
     newExemplarOfClassPostES6.show();
-   console.log( newExemplarOfClassPostES6.text);
+    console.log(newExemplarOfClassPostES6.text);
 
+    //вторая чать задания
+
+    function AttachedPostES5(name, text) {
+        PostES5.call(this, name, text);
+        this.highlighted = false;
+    }
+
+    AttachedPostES5.prototype = Object.create(PostES5.prototype);
+    AttachedPostES5.prototype.constructor = AttachedPostES5;
+
+    AttachedPostES5.prototype.makeTextHighlighted = function () {
+        this.highlighted = true;
+        this.date = new Date();
+    };
+    const post = new AttachedPostES5('ivan', 'lorem');
+    console.log(`
+          Автор поста: ${post.name}, текст ${post.text}, дата : ${post.date},
+           статус : ${post.highlighted}
+          `);
+    post.edit("New text");
+    post.makeTextHighlighted();
+    console.log(`
+          Автор поста: ${post.name}, текст: ${post.text}, дата: ${post.date},
+           статус: ${post.highlighted}
+          `);
+
+    class AttachedPostES6 extends PostES6 {
+        constructor(name, text) {
+            super(name, text);
+        }
+        highlighted = false;
+
+        makeTextHighlighted() {
+            this.highlighted = true;
+            this.date = new Date();
+        }
+    }
+
+    const newPost = new AttachedPostES6('ivan', 'lorem');
+    console.log(`
+          Автор : ${newPost.authorName}, текст  ${newPost.text}, дата
+          создания: ${newPost.date}, статус : ${newPost.highlighted}
+          `);
+    newPost.edit("ANY TEXT");
+    newPost.makeTextHighlighted();
+    console.log(`
+          Автор : ${newPost.authorName}, текст  ${newPost.text}, дата
+          создания: ${newPost.date}, статус : ${newPost.highlighted}
+          `);
 </script>
 </body>
 </html>
